@@ -1,0 +1,199 @@
+<Window x:Class="MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="CFAGestion" x:Name="WIN"
+    mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        Height="392" MaxWidth="750">
+
+    <Window.Resources>
+        <Style x:Key="{x:Type ListBox}" TargetType="ListBox">
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="FontFamily" Value="Calibri"/>          
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBox">
+                        <Border
+                                Name="LBBorder"
+                                BorderBrush="{StaticResource WinBorder}"
+                                BorderThickness="2,1,2,2"
+                                CornerRadius="0,5,5,5">
+                            <ScrollViewer
+                                    Margin="1" 
+                                    Focusable="False" >
+                                <StackPanel Margin="1" IsItemsHost="True"/>
+                            </ScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style><!-- ListBox-->
+    </Window.Resources>
+    
+    <TabControl DataContext="{StaticResource OSI}" Style="{StaticResource Window}" Grid.IsSharedSizeScope="True" x:Name="TheTabControl">
+        <TabItem Header="Entreprises" 
+                 x:Name="TIEntreprises" Background="{StaticResource WinTabItem}" >
+            <Grid  Background="{StaticResource WinGrid}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition />
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions><!--4 Rows-->
+                <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,5,0,5" Height="45" >
+                    <Image Width="25" Height="25" Name="LoupeEnt" Margin="10,0,10,0"  
+                   Stretch="Fill" Source="C:\Users\rafael\Documents\Visual Studio 2010\Projects\EntrepriseCFA\EntrepriseCFAWPF\img\icone_recherche.png" />
+                    <TextBox Height="25"  Width="150" BorderBrush="{StaticResource WinBorder}" Margin="0,0,10,0" 
+                         Name="TB_SearchEnt" CharacterCasing="Upper"
+                         Text="{Binding Path=FiltreEntreprise, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Button Content="Ajouter" Name="BT_AjouterEnt"/>
+                </StackPanel>
+                <Grid Grid.Row="3" Height="25"  >
+                   <Slider Margin="3"  Grid.Row="3" Width="100" VerticalAlignment="Center"  HorizontalAlignment="Right" Minimum="8" Maximum="40"
+                    Value="{Binding ElementName=WIN, Path=FontSize, Mode=TwoWay}"/> 
+                </Grid>
+                
+                <Grid x:Name="GRDTitreColEse">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" SharedSizeGroup="CDRaisonSocial" />
+                        <ColumnDefinition Width="auto"  SharedSizeGroup="CDCodeSiret" />
+                        <ColumnDefinition Width="auto" SharedSizeGroup="CDCodeNaf" />
+                        <ColumnDefinition Width="auto" SharedSizeGroup="CDActivite" />
+                        <ColumnDefinition Width="auto" SharedSizeGroup="CDCheck" />
+                    </Grid.ColumnDefinitions><!--5 columns-->
+                    <Label Grid.Column="0" Content="Raison Sociale" Style="{StaticResource TitreLB}"/>
+                    <Label Grid.Column="1" Content="Code SIRET" Style="{StaticResource TitreLB}" />
+                    <Label Grid.Column="2" Content="Code NAF"  Style="{StaticResource TitreLB}" />
+                    <Label Grid.Column="3" Content="Activité" Style="{StaticResource TitreLB}" />
+                </Grid>
+                <ListBox Grid.Row="1" ItemsSource="{Binding Path=Entreprises,UpdateSourceTrigger=PropertyChanged}"  
+                             x:Name="listBoxEnt" Width="auto" VirtualizingStackPanel.IsVirtualizing="True"
+                         VirtualizingStackPanel.VirtualizationMode="Recycling" >
+                    <ListBox.Resources>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="Visibility" Value="{Binding Path=Selected, Converter={StaticResource C2VISI}}" />
+                        </Style>
+                    </ListBox.Resources>
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid x:Name="GRD" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition SharedSizeGroup="CDRaisonSocial" />
+                                    <ColumnDefinition SharedSizeGroup="CDCodeSiret" />
+                                    <ColumnDefinition SharedSizeGroup="CDCodeNaf" />
+                                    <ColumnDefinition SharedSizeGroup="CDActivite" />
+                                    <ColumnDefinition SharedSizeGroup="CDCheck" />
+                                </Grid.ColumnDefinitions><!--5 columns-->
+                                <Border BorderBrush="#E0E4CC"  BorderThickness="2,2,0,0"  
+                                                Grid.ColumnSpan="5" CornerRadius="10,0,0,0" />
+                                <TextBlock Grid.Column="0"  Text="{Binding Path=RaisonSocial}" 
+                                                   Padding="5,5,5,2" /><!--Raison Social-->
+                                <TextBlock  Grid.Column="1" Text="{Binding Path=SIRET}" 
+                                                   Padding="5,5,5,2" /><!--Code Siret-->
+                                <TextBlock Grid.Column="2" Text="{Binding Path=NAF}"
+                                                   Padding="5,5,5,2" /><!--Code NAF-->
+                                <TextBlock Grid.Column="3" Text="{Binding Path=Activite}" 
+                                                   Padding="5,5,5,2" /><!--Activité-->
+                                <Image  x:Name="ficheTech"  Source="{StaticResource IMG}" Grid.Column="5" 
+                                                  Height="25" Width="auto"  Stretch="Fill" Margin="1" 
+                                            MouseDown="ficheTech_MouseDown"/><!--Image-->
+                            </Grid> 
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+            </TabItem>
+            <!--Entreprise-->
+            <TabItem Header="Etudiants" 
+                         x:Name="TIEtudiants" Background="{StaticResource WinTabItem}">
+            <Grid  Background="{StaticResource WinGrid}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition />
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <!--4 Rows-->
+                <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,5,0,5" Height="45" >
+                    <Image Width="25" Height="25" Name="LoupeEtu" Margin="10,0,10,0"  
+                   Stretch="Fill" Source="C:\Users\rafael\Documents\Visual Studio 2010\Projects\EntrepriseCFA\EntrepriseCFAWPF\img\icone_recherche.png" />
+                    <TextBox Height="25"  Width="150" BorderBrush="{StaticResource WinBorder}" Margin="0,0,10,0" 
+                         Name="TB_SearchEtu" CharacterCasing="Upper"
+                         Text="{Binding Path=FiltreEtudiant, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Button Content="Ajouter" Name="BT_AjouterEtu"/>
+                </StackPanel>
+                <Slider Grid.Row="3" Width="100" HorizontalAlignment="Right" Minimum="8" Maximum="40"
+                    Value="{Binding ElementName=WIN, Path=FontSize, Mode=TwoWay}"/>
+                <Grid x:Name="GRDTitreColEtd">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition SharedSizeGroup="CDNom"/>
+                            <ColumnDefinition SharedSizeGroup="CDPrenom"/>
+                            <ColumnDefinition SharedSizeGroup="CDSection"/>
+                            <ColumnDefinition SharedSizeGroup="CDContrat"/>
+                            <ColumnDefinition SharedSizeGroup="CDEntreprise"/>
+                        </Grid.ColumnDefinitions><!--5 columns-->
+                        <Label Grid.Column="0" Content="Nom" Style="{StaticResource TitreLB}" />
+                        <Label Grid.Column="1" Content="Prénom" Style="{StaticResource TitreLB}" />
+                        <Label Grid.Column="2" Content="Section" Style="{StaticResource TitreLB}" />
+                        <Label Grid.Column="3" Content="Date Debut" Style="{StaticResource TitreLB}" />
+                        <Label Grid.Column="4" Content="Centre de formation" Style="{StaticResource TitreLB}" />
+                    </Grid>
+                <ListBox Grid.Row="1" ItemsSource="{Binding Path=Etudiants}" 
+                         VirtualizingStackPanel.IsVirtualizing="True"
+                         VirtualizingStackPanel.VirtualizationMode="Recycling"
+                                  x:Name="ListBoxETU" Width="auto">
+                    <ListBox.Resources>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="Visibility" Value="{Binding Path=Selected, Converter={StaticResource C2VISI}}" />
+                        </Style>
+                    </ListBox.Resources>
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition SharedSizeGroup="CDNom"/>
+                                        <ColumnDefinition SharedSizeGroup="CDPrenom"/>
+                                        <ColumnDefinition SharedSizeGroup="CDSection"/>
+                                        <ColumnDefinition SharedSizeGroup="CDContrat"/>
+                                        <ColumnDefinition SharedSizeGroup="CDEntreprise"/>
+                                        <ColumnDefinition SharedSizeGroup="CDCheck" />
+                                    </Grid.ColumnDefinitions><!--6 columns-->
+                                    <Border BorderBrush="#E0E4CC"  BorderThickness="2,2,0,0"  
+                                                Grid.ColumnSpan="5" CornerRadius="10,0,0,0" />
+                                    <TextBlock  Grid.Column="0" Text="{Binding Nom}"
+                                                     Padding="5,5,5,2"/>    <!--Nom-->
+                                    <TextBlock Grid.Column="1" Text="{Binding Prenom}"
+                                                     Padding="5,5,5,2"/>    <!--Prénom-->
+                                    <TextBlock Grid.Column="2" Text="{Binding Section.Libelle}"
+                                                     Padding="5,5,5,2"/>    <!--Section-->
+                                    <TextBlock Grid.Column="3" Text="{Binding Contrat.DateDebut}"
+                                                     Padding="5,5,5,2"/>    <!--Contrat-->
+                                    <TextBlock Grid.Column="4" Text="{Binding Contrat.CentreDeForm}"
+                                                     Padding="5,5,5,2"/>    <!--Entreprise-->
+                                    <Image Source="{StaticResource IMG}" Grid.Column="5" Margin="1"
+                                                  Height="25" Width="auto" x:Name="FicheETU" MouseDown="ficheETU_MouseDown"  />        <!--Image-->
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </TabItem>
+            <!--Etudiants-->
+        </TabControl>
+</Window>

@@ -1,0 +1,228 @@
+<Window x:Class="FicheTechEnt"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:DLL="clr-namespace:EntrepriseCFA;assembly=EntrepriseCFADLL"
+        Height="600" Width="600">
+
+    <Window.Resources>
+
+        <Style x:Key="{x:Type StackPanel}" TargetType="StackPanel">
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter  Property="Orientation" Value="Horizontal" />
+        </Style><!--StackPanel-->
+        <Style x:Key="{x:Type TextBlock}" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Margin" Value="4" />
+            <Setter Property="TextDecorations" Value="Underline" />
+            <Setter Property="TextAlignment" Value="Right" />
+        </Style><!--TextBlock-->
+        <Style x:Key="{x:Type ListBox}" TargetType="ListBox">
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="Width" Value="500" />
+            <Setter Property="Height" Value="125"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBox">
+                        <Border
+                                Name="LBBorder"
+                                BorderBrush="{StaticResource WinBorder}"
+                                BorderThickness="2,1,2,2"
+                                CornerRadius="5,5,5,5">
+                            <ScrollViewer
+                                    Margin="1" 
+                                    Focusable="False" >
+                                <StackPanel Margin="1" IsItemsHost="True"/>
+                            </ScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style><!--listbox-->       
+        <Style x:Key="GRDFTE" TargetType="Grid">
+            <Setter Property="Height" Value="330"/>
+            <Setter Property="Width" Value="500" />
+            <Setter Property="Grid.Row" Value="0" />
+        </Style><!--GridFTE-->
+        <Style x:Key="TitreLB" TargetType="{x:Type Label}">
+            <Setter Property="Background" Value="{StaticResource WinTitre}" />
+            <Setter Property="BorderThickness" Value="1,2,1,0" />
+            <Setter Property="BorderBrush" Value="{StaticResource WinBorder}" />
+            <Setter Property="Control.FontSize" Value="12"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+        </Style><!--TitreLB-->
+        <Style x:Key="{x:Type TextBox}"  TargetType="TextBox">
+            <Setter Property="Background" Value="{StaticResource TBBackground}" />
+            <Setter Property="MinWidth" Value="100" />
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="BorderBrush" Value="{StaticResource WinBorder}"/>
+            <Setter Property="IsEnabled" Value="False"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#C0C0C0" ShadowDepth="5" 
+                                      Direction="135" Opacity="20"/>
+                </Setter.Value>
+            </Setter>
+        </Style><!--TextBoxFichTech-->
+
+    </Window.Resources>
+
+    <Grid x:Name="GRDGlob" DataContext="{StaticResource OSI}" Background ="{StaticResource Win}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions><!--3 Rows-->
+
+        <Grid x:Name="GRDInfos" Style="{StaticResource GRDFTE}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions><!--8 Rows-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="5"/>
+            </Grid.ColumnDefinitions><!--5 columns-->
+            <Border Grid.ColumnSpan="5" Grid.RowSpan="9" 
+                BorderBrush="{StaticResource WinBorder}" BorderThickness="1,1,1,1" CornerRadius="5,5,5,5">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,1">
+                        <LinearGradientBrush.GradientStops>
+                            <GradientStop Offset="0.1" Color="#D4D4D4"/>
+                            <GradientStop Offset="0.5" Color="#F7F5F0"/>
+                            <GradientStop Offset="0.7" Color="#D4D4D4"/>
+                        </LinearGradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+            <Label Style="{StaticResource FichTech}"  Content="Fiche Technique" Grid.ColumnSpan="4" />
+            
+            <!--Column n°1-->
+            <TextBlock Grid.Row="1"  Text="Raison Social :"/>
+            <TextBlock Grid.Row="2"  Text="Code Siret :" />
+            <TextBlock Grid.Row="3"  Text="Code NAF :" />
+            <TextBlock Grid.Row="4"  Text="Activité :" />
+            <TextBlock Grid.Row="5"  Text="Contact :" />
+            <TextBlock Grid.Row="6"  Text="Ville :"/>
+            <TextBlock Grid.Row="7"  Text="Rue :" />
+            <TextBlock Grid.Row="8"  Text="Code Postal :" />
+
+            <!--Column n°2-->
+            <TextBox Name="TxtBRaisonSocial" Grid.Column="1" Grid.Row="1"
+                       Text="{Binding Path=RaisonSocial}" CharacterCasing="Upper"/><!--RaisonSo-->
+            <TextBox Name="TxtBSiret" Grid.Column="1" Grid.Row="2"
+                       Text="{Binding Path=SIRET}"/><!--SIRET-->
+            <TextBox Name="TxtBNaf" Grid.Column="1" Grid.Row="3"
+                      Text="{Binding Path=NAF}"/><!--NAF-->
+            <TextBox  Name="TxtBActivite" Grid.Column="1" Grid.Row="4"
+                       Text="{Binding Path=Activite}" /><!--Activite-->
+            <TextBox Name="TxtBContact" Grid.Column="1" Grid.Row="5"
+                       Text="{Binding Path=Contact}" /><!--Contact-->
+            <TextBox Name="TxtBVille" Grid.Column="1" Grid.Row="6"
+                       Text="{Binding Path=Ville}" CharacterCasing="Upper" /><!--Ville-->
+            <TextBox Name="TxtBRue" Grid.Column="1" Grid.Row="7"
+                       Text="{Binding Path=Rue}"/><!--Rue-->
+            <TextBox Name="TxtBCP" Grid.Column="1" Grid.Row="8"
+                       Text="{Binding Path=CP}" /><!--CP-->
+
+            <!--Column n°3-->
+            <TextBlock Grid.Column="2" Grid.Row="2" Text="Quota O :"/>
+            <TextBlock Grid.Column="2" Grid.Row="3" Text="Quota L :" />
+            <TextBlock Grid.Column="2" Grid.Row="4" Text="Quota A :" />
+            <TextBlock Grid.Column="2" Grid.Row="5" Text="Quota B :" />
+            <TextBlock Grid.Column="2" Grid.Row="6" Text="Quota C :" />
+            <TextBlock Grid.Column="2" Grid.Row="7" Text="Total : " Margin="0,10,0,0"/>            
+            
+            <!--Column n°4-->
+            <TextBox Name="TxtBQuotaO" Grid.Column="3" Grid.Row="2"
+                       Text="{Binding Path=Quota.QuotaO}"/><!--QuotaO-->
+            <TextBox Name="TxtBQuotaL" Grid.Column="3" Grid.Row="3"
+                       Text="{Binding Path=Quota.QuotaL}" /><!--QuotaL-->
+            <TextBox Name="TxtBQuotaA" Grid.Column="3" Grid.Row="4"
+                       Text="{Binding Path=Quota.QuotaA}" /><!--QuotaA-->
+            <TextBox Name="TxtBQuotaB" Grid.Column="3" Grid.Row="5"
+                       Text="{Binding Path=Quota.QuotaB}" /><!--QuotaB-->
+            <TextBox Name="TxtBQuotaC" Grid.Column="3" Grid.Row="6"
+                       Text="{Binding Path=Quota.QuotaC}" /><!--QuotaC-->
+            <Border Grid.Column="3" Grid.Row="7" 
+                    BorderThickness="0,2,0,0" BorderBrush="{StaticResource WinBorder}" />
+            <TextBox Name="TxtBQuotaTotal" Grid.Column="3" Grid.Row="7"
+                       Text="{Binding Path=Quota.Total, Mode=OneWay}" /><!--Total-->
+        </Grid>
+        <Grid Grid.Row="1" Width="500" Grid.IsSharedSizeScope="True">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions><!--2 Rows-->
+            <Grid x:Name="GRDColTitre">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="CDNom" Width="100"/>
+                    <ColumnDefinition SharedSizeGroup="CDPrénom" Width="100"/>
+                    <ColumnDefinition SharedSizeGroup="CDContrat" Width="auto"/>
+                    <ColumnDefinition SharedSizeGroup="CDCentreDeForm" Width="auto"/>
+                </Grid.ColumnDefinitions><!--4 Columns-->
+                <Label Grid.Column="0" Content="Nom" Style="{StaticResource TitreLB}"/>
+                <Label Grid.Column="1" Content="Prénom" Style="{StaticResource TitreLB}"/>
+                <Label Grid.Column="2" Content="Contrat" Style="{StaticResource TitreLB}"/>
+                <Label Grid.Column="3" Content="Centre Formation" Style="{StaticResource TitreLB}"/>
+            </Grid>
+            <ListBox Grid.Row="1" x:Name="listBoxETU">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition SharedSizeGroup="CDNom"/>
+                                <ColumnDefinition SharedSizeGroup="CDPrénom"/>
+                                <ColumnDefinition SharedSizeGroup="CDContrat"/>
+                                <ColumnDefinition SharedSizeGroup="CDCentreDeForm"/>
+                                <ColumnDefinition SharedSizeGroup="CDOption"/>
+                            </Grid.ColumnDefinitions><!--4 columns-->
+                            <Border BorderBrush="#E0E4CC"  BorderThickness="2,2,0,0" 
+                                    Grid.ColumnSpan="4" CornerRadius="10,0,0,0"/>
+                            <TextBlock Grid.Column="0" Text="{Binding Path=Nom}"
+                                                     Padding="3,2,3,2"/><!--Nom-->
+                            <TextBlock Grid.Column="1" Text="{Binding Path=Prenom}"
+                                                     Padding="3,2,3,2"/><!--Prénom-->
+                            <TextBlock Grid.Column="2" Text="{Binding Path=Section.Libelle}"
+                                                     Padding="3,2,3,2"/><!--Contrat-->
+                            <TextBlock Grid.Column="3" Text="{Binding Path=Contrat.CentreDeForm}"
+                                                     Padding="3,2,3,2"/><!--CentreDeForm-->
+                            <Button Content="Afficher" Grid.Column="4" Height="23" 
+                                    Margin="5,0,0,0" x:Name="BT_Afficher" 
+                                     Width="auto" Click="BT_Afficher_Click" /><!--BT_Afficher-->
+                            
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        <StackPanel Grid.Row="2">
+            <Button x:Name="BT_Modifier" Content="Modifier"/>
+            <Button x:Name="BT_Enregistrer" Content="Enregistrer" Visibility="Collapsed" />
+            
+            <Button x:Name="BT_Supprimer" Content="Supprimer"/>
+            <Button x:Name="BT_Annuler" Content="Annuler" Visibility="Collapsed" />
+        </StackPanel><!--4 buttons-->
+    </Grid>
+</Window>

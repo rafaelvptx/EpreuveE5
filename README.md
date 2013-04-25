@@ -1,6 +1,5 @@
-EpreuveE5
-=========
+Dossier Epreuve E4 : CFA Gustave Eiffel
 
-Situation 1 / Situation 2
+Situation 1 : Fiche Technique Entreprise
 
-Dossier en cours...
+Situation 2 : Win Ajout Entreprise

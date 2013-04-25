@@ -1,0 +1,71 @@
+<Application x:Class="Application"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:DLL="clr-namespace:EntrepriseCFA;assembly=EntrepriseCFADLL"
+    StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        
+        <DLL:SI x:Key="OSI"/>
+        <DLL:CNVToVisibility x:Key="C2VISI" />
+
+        <SolidColorBrush x:Key="WinTitre" Color="#BFA76F"/>
+        <SolidColorBrush x:Key="WinTabControl" Color="#A7DBD8"/>
+        <SolidColorBrush x:Key="WinBorder" Color="#5B5B5B"/>
+        <SolidColorBrush x:Key="WinButton" Color="#BFA76F" />
+        <SolidColorBrush x:Key="WinTabItem" Color="#EBE8E6" />
+        <SolidColorBrush x:Key="WinGrid" Color="#69D2E7" />
+        <SolidColorBrush x:Key="Win" Color="#9AE4E8" />
+        <SolidColorBrush x:Key="TBBackground" Color="#F8ECC9"/>
+
+        <BitmapImage x:Key="IMG"  
+                     UriSource="C:\Users\rafael\Documents\Visual Studio 2010\Projects\EntrepriseCFA\EntrepriseCFAWPF\img\profile-add-icon.png" />
+        
+        <Style x:Key="{x:Type Button}" TargetType="Button" >
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Width" Value="103"/>
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="Background" Value="{StaticResource WinButton}" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style><!--Button-->
+        
+        <Style x:Key="Window" TargetType="TabControl">
+            <Setter Property="Background" Value="{StaticResource WinTabControl}"/>
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="Black" />
+        </Style><!-- TabControl -->
+        
+        <Style x:Key="TitreLB" TargetType="{x:Type Label}">
+            <Setter Property="Background" Value="{StaticResource WinTitre}" />
+            <Setter Property="BorderThickness" Value="1,2,1,0" />
+            <Setter Property="BorderBrush" Value="{StaticResource WinBorder}" />
+            <Setter Property="Control.FontSize" Value="14"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+        </Style><!--TitreLB-->
+
+        <Style x:Key="FichTech" TargetType="{x:Type Label}">
+            <Setter Property="FontFamily" Value="Calibri" />
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style><!--TitreFicheTech-->
+
+        <Style x:Key="{x:Type TextBox}"  TargetType="TextBox">
+            <Setter Property="Background" Value="{StaticResource TBBackground}" />
+            <Setter Property="MinWidth" Value="100" />
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="BorderBrush" Value="{StaticResource WinBorder}"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#C0C0C0" ShadowDepth="5" 
+                                      Direction="135" Opacity="20"/>
+                </Setter.Value>
+            </Setter>
+        </Style><!--TextBoxFichTech-->
+        
+    </Application.Resources>
+</Application>

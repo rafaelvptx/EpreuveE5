@@ -1,7 +1,7 @@
 Dossier Epreuve E4 : CFA Gustave Eiffel
 
-https://www.dropbox.com/s/vrxrbxlweh5y944/DossierEpreuveE4.pdf
+Lien à venir...
 
-Situation 1 : Fiche Technique Entreprise
+Situation 1 : Affichage et saisie d'une entreprise
 
-Situation 2 : Win Ajout Entreprise
+Situation 2 : Vote en ligne CVL
